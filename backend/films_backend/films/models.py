@@ -1,6 +1,8 @@
 from django.db import models
 from taggit.managers import TaggableManager
 
+
+
 # Create your models here.
 class Film(models.Model):
     name = models.CharField(max_length=128)
@@ -12,3 +14,6 @@ class Film(models.Model):
 
     def __str__(self):
         return self.name
+    
+
+    

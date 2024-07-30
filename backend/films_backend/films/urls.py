@@ -7,6 +7,9 @@ router.register('films', FilmViewSet, basename='films')
 
 urlpatterns = router.urls
 
+urlpatterns += [
+    path('register/', RegistrarionAPIView.as_view())
+]
 
 
 #urlpatterns = [
