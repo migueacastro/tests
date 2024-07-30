@@ -4,7 +4,7 @@
 
 
 
-<nav class="bg-gray-200 border-gray-200">
+<nav class="bg-gray-200 border-gray-200 mb-10">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
       <a href="/films/" class="flex items-center space-x-3 rtl:space-x-reverse">
           <span class="self-center text-2xl font-semibold whitespace-nowrap ">Films</span>
@@ -29,4 +29,4 @@
 </nav>
   
 
-<slot />
+<slot/>
