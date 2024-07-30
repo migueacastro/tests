@@ -1,0 +1,14 @@
+services:
+  backend:
+    image: backend
+    ports:
+      - "8000:8000"
+  frontend:
+    image: frontend-front
+    restart: always
+    build: .
+    volumes:
+      - ./frontend/:/app
+    ports:
+      - "3000:3000"
+    command: ["yarn", "dev", "--host", "0.0.0.0"]
