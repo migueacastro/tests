@@ -5,6 +5,7 @@
     let director = '';
     let description = '';
     let files;
+    let tags = '';
     let showInvalidMessage = false;
 
     let validFields = () => {
@@ -22,6 +23,12 @@
         data.append('director', director);
         data.append('description', description);
         data.append('image', files[0]);
+
+        if (tags.length) {
+            const tagList = tags.split(",");
+            tagList.forEach(tag => data.append('tags', tag.trim()));
+        }
+        
         fetch(endpoint, {
             method: 'POST',
             body: data,
@@ -29,8 +36,9 @@
         .then(response => response.json())
         .then(data => {
             FilmStore.update(prev => [...prev, data]);
+            goto('/films/');
         });
-        goto('/films/');
+        
     };
 
     
@@ -50,7 +58,7 @@
             <input type="text" placeholder="Director" bind:value={director} class="my-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-cyan-500" />
             <input type="text" placeholder="Description" bind:value={description} class="my-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-cyan-500" />
             <input type="file" accept=".jpg, .jpeg, .png, .webp" placeholder="Files" bind:files={files} class="my-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-cyan-500 " />
-            
+            <input type="text" placeholder="Tags" bind:value={tags} class="my-1 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-cyan-500" />
             <input type="submit" class="shadow my-4 bg-cyan-500 hover:bg-cyan-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded">
         </div>
     </form>

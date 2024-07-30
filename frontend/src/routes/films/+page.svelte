@@ -2,6 +2,19 @@
     import {FilmStore} from "../../film-store"
     import {onMount} from "svelte"
     
+    let tags = [];
+    let selectedTag = '';
+
+    let setTags = () => {
+        let tagSet = new Set();
+        $FilmStore.map(film => film.tags.forEach(tag => tagSet.add(tag)));
+        tags = Array.from(tagSet);
+    };
+
+    $: filteredFilms = $FilmStore.filter(film => {
+        return selectedTag === '' || film.tags.includes(selectedTag);
+    })
+
 
     let handleDelete = (id) => {
         const endpoint = `http://localhost:8000/api/films/${id}/`;
@@ -11,6 +24,7 @@
         .then(response => response.json())
         .then(data => {
             FilmStore.update(prev => prev.filter(film => film.id != id));  
+            setTags();
         })
 
     };
@@ -22,14 +36,22 @@
             const data = await response.json();
             FilmStore.set(data);
         }
+        setTags();
     });
 </script>
 
 <div class="flex  items-center flex-col h-screen ">
     <h2 class="text-3xl block text-black font-bold md:text-right mb-1 md:mb-0 pr-4 my-5">Films</h2>
+
+    <div class="my-3">
+        {#each tags as tag}
+            <button on:click={() => selectedTag = tag} class="mx-1 shadow my-4 bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-medium py-1 px-2 rounded">{tag}</button>
+        {/each}
+        <button on:click={() => selectedTag = ''} class="mx-1 shadow my-4 bg-gray-500 hover:bg-gray-400 focus:shadow-outline focus:outline-none text-white font-medium py-1 px-2 rounded">All</button>
+    </div>
     <div class="flex  items-center flex-col">
         <ul class="grid grid-cols-2 gap-6 my-5">
-        {#each $FilmStore as film}
+        {#each filteredFilms as film}
         <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow ">
             <a href="#">
             </a>

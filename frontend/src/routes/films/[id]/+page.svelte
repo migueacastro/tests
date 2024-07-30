@@ -36,7 +36,7 @@
                 <p class="text-left p-2">{film.description}</p>
 
                 <a href="/films/{film.id}/update" class="w-fit inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-yellow-500 rounded-lg hover:bg-yellow-400 focus:ring-4 focus:outline-none focus:ring-yellow-300">
-                    Editar
+                    Edit
                 </a>
             </div>
             
